@@ -1,13 +1,18 @@
 import sys
+from turtle import Screen
 import pygame
+
+from settings import Settings
 
 # This class will serve as the superclass to manage game assets and behavior
 class AlienInvasion:
     def __init__(self):
         # This method serves as a way to initialize the game and create game resources
         pygame.init()
+        self.settings = Settings()
         
-        self.screen = pygame.display.set_mode((1200, 800))
+        self.screen = pygame.display.set_mode(
+            (self.settings.screen_width, self.settings.screen_height))
         pygame.display.set_caption("Alien Inavsion")
         
         # Setting the background color
@@ -23,7 +28,7 @@ class AlienInvasion:
                     sys.exit()
             
             # Fill the screen with the color chose and redraw the screen during each pass I make through the loop
-            self.screen.fill(self.big_color)
+            self.screen.fill(self.settings.bg_color)
             
             # Makes the most recently drawn screen visible       
             pygame.display.flip()
