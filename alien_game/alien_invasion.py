@@ -1,10 +1,12 @@
 import sys
 import pygame
 
-# Imports the settings class
+# Imports the settings class created in settings.py
 from settings import Settings
-# Imports the ship class
+# Imports the ship class created in ship.py
 from ship import Ship
+# Imports the bullet class created in bullet.py
+from bullet import Bullet
 
 # This class will serve as the superclass to manage game assets and behavior
 class AlienInvasion:
@@ -20,6 +22,10 @@ class AlienInvasion:
         
         # From ship class
         self.ship = Ship(self)
+        
+        # Bullet class
+        self.bullets = pygame.sprite.Group()
+        
         # Setting the background color
         # This color would be a light gray color (we can play around and change it later if we'd like)
         self.big_color = (230, 230, 230)
@@ -29,6 +35,7 @@ class AlienInvasion:
         while True:
             self._check_events()
             self.ship.update()
+            self.bullets.update()
             self._update_screen()
             
     def _check_events(self):
@@ -50,6 +57,8 @@ class AlienInvasion:
             self.ship.moving_left = True
         elif event.key == pygame.K_q:
             sys.exit()
+        elif event.key == pygame.K_SPACE: # fires bullet when you hit space bar
+            self._fire_bullet()
             
     def _check_keyup_events(self, event):
         # Respond to key releases
@@ -57,8 +66,14 @@ class AlienInvasion:
             self.ship.moving_right = False
         elif event.key == pygame.K_LEFT:
             self.ship.moving_left = False
+ 
                 
-                
+    # Method for fireing bullet
+    def _fire_bullet(self):
+        # Create a new bullet and add it to the bullets group
+        new_bullet = Bullet(self)
+        self.bullets.add(new_bullet)
+    
                           
     def _update_screen(self):
         # Update images on the screen, and flip to the new screen        
@@ -66,6 +81,9 @@ class AlienInvasion:
         self.screen.fill(self.settings.bg_color)
         # From ship class
         self.ship.blitme()
+        
+        for bullet in self.bullets.sprites():
+            bullet.draw_bullet()
             
         # Makes the most recently drawn screen visible       
         pygame.display.flip()
