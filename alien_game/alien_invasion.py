@@ -7,6 +7,8 @@ from settings import Settings
 from ship import Ship
 # Imports the bullet class created in bullet.py
 from bullet import Bullet
+# Imports alien class created in alien.py
+from alien import Alien
 
 # This class will serve as the superclass to manage game assets and behavior
 class AlienInvasion:
@@ -25,6 +27,11 @@ class AlienInvasion:
         
         # Bullet class
         self.bullets = pygame.sprite.Group()
+        
+        # Alien class
+        self.aliens = pygame.sprite.Group()
+        
+        self._create_fleet()
         
         # Setting the background color
         # This color would be a light gray color (we can play around and change it later if we'd like)
@@ -86,6 +93,11 @@ class AlienInvasion:
                 self.bullets.remove(bullet)
             # print(len(self.bullets)) this is to check if the bullets actually disappear from the screen            
                    
+    def _create_fleet(self):
+        # Creates the fleet of aliens.
+        # Make an alien.
+        alien = Alien(self)
+        self.aliens.add(alien)
                           
     def _update_screen(self):
         # Update images on the screen, and flip to the new screen        
@@ -96,6 +108,7 @@ class AlienInvasion:
         
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
+        self.aliens.draw(self.screen)
             
         # Makes the most recently drawn screen visible       
         pygame.display.flip()
