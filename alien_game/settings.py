@@ -15,7 +15,7 @@ class Settings:
         self.fleet_direction = 1
         
         #Bullet settings
-        self.bullet_speed = 5.0
+        self.bullet_speed = 10.0
         self.bullet_width = 5
         self.bullet_height = 20
         self.bullet_color = (255, 0, 0)
@@ -23,5 +23,5 @@ class Settings:
         self.bullets_allowed = 50
         
         # Ship settings
-        self.ship_speed = 2.0
+        self.ship_speed = 5.0
         self.ship_limit = 3

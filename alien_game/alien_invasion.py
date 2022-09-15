@@ -7,6 +7,9 @@ import pygame
 from settings import Settings
 # Imports stats from game_stats.py
 from game_stats import GameStats
+
+from button import Button
+
 # Imports the ship class created in ship.py
 from ship import Ship
 # Imports the bullet class created in bullet.py
@@ -44,6 +47,10 @@ class AlienInvasion:
         # This color would be a light gray color (we can play around and change it later if we'd like)
         self.big_color = (230, 230, 230)
         
+        # Makes the play button
+        self.play_button = Button(self, "Play")
+        
+        
     def run_game(self):
         # Starts the main loop for the game
         while True:
@@ -53,7 +60,8 @@ class AlienInvasion:
                 self.ship.update()
                 self._update_bullets()
                 self._update_aliens()
-                self._update_screen()
+            
+            self._update_screen()
             
                             
     def _check_events(self):
@@ -212,6 +220,10 @@ class AlienInvasion:
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
         self.aliens.draw(self.screen)
+        
+        # Draw the play button if the game is inactive
+        if not self.stats.game_active:
+            self.play_button.draw_button()
             
         # Makes the most recently drawn screen visible       
         pygame.display.flip()
